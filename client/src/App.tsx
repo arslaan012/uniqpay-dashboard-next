@@ -3,14 +3,21 @@ import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import Dashboard from "@/pages/Dashboard";
 import NotFound from "@/pages/not-found";
 
 function Router() {
   return (
     <Switch>
-      {/* Add pages below */}
-      {/* <Route path="/" component={Home}/> */}
-      {/* Fallback to 404 */}
+      <Route path="/" component={Dashboard} />
+      {/* Fallback to Dashboard for demo pages since they share layout */}
+      <Route path="/create-mid" component={Dashboard} />
+      <Route path="/wallet" component={Dashboard} />
+      <Route path="/withdrawals" component={Dashboard} />
+      <Route path="/ledger" component={Dashboard} />
+      <Route path="/payouts" component={Dashboard} />
+      <Route path="/bulk" component={Dashboard} />
+      <Route path="/webhooks" component={Dashboard} />
       <Route component={NotFound} />
     </Switch>
   );

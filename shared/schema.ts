@@ -1,18 +1,37 @@
-import { sql } from "drizzle-orm";
-import { pgTable, text, varchar } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, numeric, timestamp, boolean } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
-export const users = pgTable("users", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  username: text("username").notNull().unique(),
-  password: text("password").notNull(),
+// === TABLE DEFINITIONS ===
+export const transactions = pgTable("transactions", {
+  id: serial("id").primaryKey(),
+  user: text("user").notNull(),
+  orderId: text("order_id").notNull(),
+  txnRef: text("txn_ref").notNull(),
+  uniqueRef: text("unique_ref").notNull(),
+  bankRef: text("bank_ref").notNull(),
+  currency: text("currency").notNull().default('USD'),
+  type: text("type").notNull(), // 'Payin' | 'Payout'
+  gross: numeric("gross").notNull(),
+  mdr: numeric("mdr").notNull(),
+  net: numeric("net").notNull(),
+  status: text("status").notNull(), // 'Success' | 'Pending' | 'Failed'
+  date: timestamp("date").notNull().defaultNow(),
 });
 
-export const insertUserSchema = createInsertSchema(users).pick({
-  username: true,
-  password: true,
-});
+// === BASE SCHEMAS ===
+export const insertTransactionSchema = createInsertSchema(transactions).omit({ id: true });
 
-export type InsertUser = z.infer<typeof insertUserSchema>;
-export type User = typeof users.$inferSelect;
+// === EXPLICIT API CONTRACT TYPES ===
+export type Transaction = typeof transactions.$inferSelect;
+export type InsertTransaction = z.infer<typeof insertTransactionSchema>;
+
+// Stats type
+export interface DashboardStats {
+  totalBalance: string;
+  todayDeposited: string;
+}
+
+// Request/Response types
+export type TransactionResponse = Transaction;
+export type TransactionsListResponse = Transaction[];
