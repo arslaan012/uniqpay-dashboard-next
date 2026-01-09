@@ -1,17 +1,8 @@
 import { useState } from "react";
 import { Layout } from "@/components/Layout";
 import { useTransactions, useDashboardStats } from "@/hooks/use-transactions";
-import { 
-  Calendar as CalendarIcon, 
-  Download, 
-  FileSpreadsheet, 
-  File as FilePdf,
-  Filter,
-  Search,
-  ChevronLeft,
-  ChevronRight,
-  MoreHorizontal
-} from "lucide-react";
+import { Search, Bell, Globe, ChevronLeft, ChevronRight, Download, FileSpreadsheet, File as FilePdf, Filter, MoreHorizontal, Calendar as CalendarIcon } from "lucide-react";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { 

@@ -41,6 +41,32 @@
   --shadow-premium: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.04);
 }
 
+.dark {
+  --background: 222 47% 6%;
+  --foreground: 210 40% 98%;
+
+  --sidebar-bg: 222 47% 4%;
+  --sidebar-fg: 210 40% 98%;
+  --sidebar-hover: 217 33% 12%;
+  --sidebar-border: 217 33% 15%;
+
+  --primary: 226 70% 60%;
+  --primary-foreground: 210 40% 98%;
+
+  --accent: 174 96% 45%;
+  --accent-foreground: 210 40% 98%;
+
+  --muted: 217 33% 12%;
+  --muted-foreground: 215 20% 65%;
+  --border: 217 33% 15%;
+  --input: 217 33% 15%;
+  --ring: 226 70% 60%;
+
+  --success: 142 71% 45%;
+  --warning: 38 92% 50%;
+  --destructive: 0 84% 60%;
+}
+
 @layer base {
   body {
     @apply bg-background text-foreground antialiased font-sans;
