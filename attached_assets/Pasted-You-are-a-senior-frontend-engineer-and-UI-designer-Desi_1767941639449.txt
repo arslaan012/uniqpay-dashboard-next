@@ -1,0 +1,222 @@
+You are a senior frontend engineer and UI designer.
+
+Design and implement a modern, premium fintech admin dashboard using Next.js (App Router) and Tailwind CSS.
+
+Context
+
+This is a Payin Ledger / Transactions dashboard for a payments platform (Stripe / Razorpay / Wise inspired).
+
+The UI must feel:
+
+Enterprise-grade
+
+Clean
+
+Minimal
+
+SaaS-quality
+
+Not like a generic admin template
+
+No backend is required — use static realistic dummy data.
+
+Tech Requirements
+
+Next.js 14+ (App Router)
+
+Tailwind CSS
+
+Use client components only where required
+
+No React CRA, no Vite
+
+No backend / API calls
+
+Use modern icon set (Lucide or Heroicons)
+
+Responsive (desktop-first, tablet friendly)
+
+Fonts & Style
+
+Use Inter for body text
+
+Use Poppins for headings
+
+Clean spacing, good typography
+
+Avoid heavy borders
+
+Use shadows, dividers, subtle gradients
+
+Color Palette
+
+Sidebar: deep slate / charcoal
+
+Primary accent: indigo / teal / emerald
+
+Success: green
+
+Warning: amber
+
+Error: red
+
+Layout Structure
+1. Left Sidebar (fixed, dark)
+
+Logo at top
+
+Navigation items:
+
+Dashboard
+
+Create MID
+
+Money Wallet
+
+My Withdrawals
+
+Payin Ledger (active)
+
+Payout Ledger
+
+Bulk Payout
+
+Webhook Guide
+
+Active item highlighted with accent color
+
+Hover states on all items
+
+2. Top Header
+
+Brand name on left
+
+“Try Demo APIs” button
+
+Right side icons:
+
+Notifications
+
+Language
+
+Profile avatar
+
+3. Main Content
+
+Page title: Transactions
+
+Two summary cards:
+
+Total Balance (large, highlighted)
+
+Today Deposited
+
+Cards should:
+
+Have soft shadows
+
+Rounded corners
+
+Accent border or subtle gradient
+
+Look visually distinct
+
+4. Filters Section
+
+Transaction status dropdown
+
+Transaction type dropdown
+
+Date range (From – To)
+
+Primary CTA: Email Report
+
+Compact, clean layout
+
+5. Export & Controls Row
+
+Export buttons:
+
+Excel
+
+PDF
+
+“Show entries” dropdown
+
+Search input aligned to the right
+
+6. Transactions Table
+
+Columns:
+
+User
+
+Order / Invoice ID
+
+Txn Reference No
+
+Unique Txn Reference No
+
+Bank UTR Reference No
+
+Currency
+
+Type
+
+Gross
+
+MDR
+
+Net
+
+Table features:
+
+Sticky header
+
+Zebra rows
+
+Hover highlight
+
+Right-aligned numeric columns
+
+Proper currency formatting
+
+Pagination at bottom
+
+UX & Polish (VERY IMPORTANT)
+
+Subtle animations (hover, load, focus)
+
+Active states for sidebar & filters
+
+Clear visual hierarchy
+
+Readable table even with large numbers
+
+Mobile responsiveness
+
+Clean spacing and alignment
+
+Deliverables
+
+Full Next.js App Router code
+
+Tailwind included
+
+Clean, commented code
+
+Dummy data filled realistically
+
+Easy to plug into real APIs later
+
+Output format
+
+Provide full file structure
+
+Provide complete code for each file
+
+Ensure it runs with npm run dev
+
+Goal
+
+Create a production-ready Payin Ledger dashboard UI that looks better than a typical admin template and feels premium, fintech-grade.
