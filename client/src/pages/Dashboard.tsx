@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Layout } from "@/components/Layout";
 import { useTransactions, useDashboardStats } from "@/hooks/use-transactions";
-import { Search, Bell, Globe, ChevronLeft, ChevronRight, Download, FileSpreadsheet, File as FilePdf, Filter, MoreHorizontal, Calendar as CalendarIcon } from "lucide-react";
+import { Search, Bell, Globe, ChevronLeft, ChevronRight, Download, FileSpreadsheet, File as FilePdf, Filter, MoreHorizontal, Calendar as CalendarIcon, X } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,6 +12,12 @@ import {
   SelectTrigger,
   SelectValue, 
 } from "@/components/ui/select";
+import { 
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -20,13 +26,21 @@ export default function Dashboard() {
   const { data: transactions, isLoading: isLoadingTxns } = useTransactions();
   const { data: stats, isLoading: isLoadingStats } = useDashboardStats();
   const [searchTerm, setSearchTerm] = useState("");
+  const [startDate, setStartDate] = useState<Date | undefined>(undefined);
+  const [endDate, setEndDate] = useState<Date | undefined>(undefined);
 
-  const filteredTransactions = transactions?.filter(t => 
-    searchTerm === "" || 
-    Object.values(t).some(val => 
-      String(val).toLowerCase().includes(searchTerm.toLowerCase())
-    )
-  );
+  const filteredTransactions = transactions?.filter(t => {
+    const matchesSearch = searchTerm === "" || 
+      Object.values(t).some(val => 
+        String(val).toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    
+    const txnDate = new Date(t.date);
+    const matchesStartDate = !startDate || txnDate >= startDate;
+    const matchesEndDate = !endDate || txnDate <= endDate;
+
+    return matchesSearch && matchesStartDate && matchesEndDate;
+  });
 
   return (
     <Layout>
@@ -74,10 +88,61 @@ export default function Dashboard() {
               </SelectContent>
             </Select>
 
-            <Button variant="outline" className="bg-muted border-border text-muted-foreground hover:text-foreground">
-              <CalendarIcon className="mr-2 h-4 w-4" />
-              Select Dates
-            </Button>
+            <div className="flex items-center gap-2">
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button variant="outline" className={cn(
+                    "bg-muted border-border text-muted-foreground hover:text-foreground",
+                    startDate && "text-foreground"
+                  )}>
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {startDate ? format(startDate, "PPP") : "From"}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={startDate}
+                    onSelect={setStartDate}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button variant="outline" className={cn(
+                    "bg-muted border-border text-muted-foreground hover:text-foreground",
+                    endDate && "text-foreground"
+                  )}>
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {endDate ? format(endDate, "PPP") : "To"}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={endDate}
+                    onSelect={setEndDate}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+
+              {(startDate || endDate) && (
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  className="h-9 w-9 text-muted-foreground"
+                  onClick={() => {
+                    setStartDate(undefined);
+                    setEndDate(undefined);
+                  }}
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              )}
+            </div>
           </div>
           
           <Button className="w-full lg:w-auto bg-indigo-600 hover:bg-indigo-700 text-white shadow-md shadow-indigo-900/20">
